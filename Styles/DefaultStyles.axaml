@@ -1,0 +1,147 @@
+﻿<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20" />
+    </Design.PreviewWith>
+
+    <Style Selector="Button">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="FontFamily" Value="{DynamicResource Fonts}" />
+        <Setter Property="FontSize" Value="30" />
+        <Setter Property="Foreground" Value="{DynamicResource SecondaryTextForeground}" />
+        <Setter Property="RenderTransform" Value="scale(1)" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <TransformOperationsTransition
+                    Duration="0:0:0.18"
+                    Easing="CubicEaseOut"
+                    Property="RenderTransform" />
+            </Transitions>
+        </Setter>
+    </Style>
+    <Style Selector="Button.active:pointerover /template/ContentPresenter">
+        <Setter Property="Background">
+            <LinearGradientBrush EndPoint="0%, 100%" StartPoint="0%, 0%">
+                <GradientStop Color="#3B82F6" Offset="0.0" />
+                <GradientStop Color="#1D4ED8" Offset="1.0" />
+            </LinearGradientBrush>
+        </Setter>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextForeground}" />
+        <Setter Property="RenderTransform" Value="scale(1.05)" />
+    </Style>
+
+    <Style Selector="Button.active:pressed /template/ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource PressedButtonBgColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextForeground}" />
+        <Setter Property="RenderTransform" Value="scale(0.98)" />
+    </Style>
+
+
+    <Style Selector="Button.active /template/ ContentPresenter">
+        <Setter Property="Background">
+            <LinearGradientBrush EndPoint="0%, 100%" StartPoint="0%, 0%">
+                <GradientStop Color="#3B82F6" Offset="0.0" />
+                <GradientStop Color="#1D4ED8" Offset="1.0" />
+            </LinearGradientBrush>
+        </Setter>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextForeground}" />
+    </Style>
+
+    <Style Selector="TextBlock">
+        <Setter Property="FontFamily" Value="{DynamicResource Fonts}" />
+    </Style>
+    <Style Selector="TextBlock.LogoHome">
+        <Setter Property="Foreground">
+            <LinearGradientBrush>
+                <GradientStop Color="MediumBlue" Offset="0" />
+                <GradientStop Color="#3B82F6" Offset="1" />
+            </LinearGradientBrush>
+        </Setter>
+    </Style>
+    <Style Selector="Border.Card">
+        <Setter Property="Background" Value="{DynamicResource PrimaryCardColor}" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushColor}" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="CornerRadius" Value="10" />
+    </Style>
+
+    <!--  Common Button Style  -->
+    <Style Selector="Button.ChooseFolderButton, Button.OrganizeButton, Button.ChooseFileButton, Button.UndoButton">
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="RenderTransform" Value="scale(1)" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <TransformOperationsTransition Duration="0:0:0.18" Property="RenderTransform" />
+            </Transitions>
+        </Setter>
+    </Style>
+
+    <!--  Purple Button  -->
+    <Style Selector="Button.ChooseFolderButton">
+        <Setter Property="Background">
+            <LinearGradientBrush>
+                <GradientStop Color="#8B7CFF" Offset="0" />
+                <GradientStop Color="#5140C8" Offset="1" />
+            </LinearGradientBrush>
+        </Setter>
+    </Style>
+
+    <!--  Green Button  -->
+    <Style Selector="Button.OrganizeButton">
+        <Setter Property="Background">
+            <LinearGradientBrush>
+                <GradientStop Color="#29D49A" Offset="0" />
+                <GradientStop Color="#2BB9C8" Offset="1" />
+            </LinearGradientBrush>
+        </Setter>
+    </Style>
+
+    <!--  Undo Button  -->
+    <Style Selector="Button.UndoButton">
+        <Setter Property="Background">
+            <LinearGradientBrush>
+                <GradientStop Color="#003366" Offset="0" />
+                <GradientStop Color="#0284C7  " Offset="1" />
+            </LinearGradientBrush>
+        </Setter>
+    </Style>
+
+    <!--  Hover  -->
+    <Style Selector="Button.ChooseFolderButton:pointerover, Button.UndoButton:pointerover, Button.OrganizeButton:pointerover, Button.ChooseFileButton:pointerover">
+        <Setter Property="RenderTransform" Value="scale(1.04)" />
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+
+    <!--  Pressed  -->
+    <Style Selector="Button.ChooseFolderButton:pressed, Button.UndoButton:pressed, Button.OrganizeButton:pressed, Button.ChooseFileButton:pressed">
+        <Setter Property="RenderTransform" Value="scale(0.97)" />
+    </Style>
+
+    <Style Selector="Border.FolderInfo">
+        <Setter Property="Background" Value="{DynamicResource PrimaryBackgroundColor}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushColor}" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="Height" Value="90" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="CornerRadius" Value="12" />
+        <Setter Property="Padding" Value="10" />
+    </Style>
+
+    <!--  ChooseFile Button  -->
+    <Style Selector="Button.ChooseFileButton">
+        <Setter Property="Background">
+            <LinearGradientBrush>
+                <GradientStop Color="Green" Offset="0" />
+                <GradientStop Color="LightGreen" Offset="1" />
+            </LinearGradientBrush>
+        </Setter>
+    </Style>
+</Styles>
+

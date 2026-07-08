@@ -1,0 +1,303 @@
+﻿<UserControl
+    Background="{DynamicResource PrimaryBackgroundColor}"
+    d:DesignHeight="800"
+    d:DesignWidth="1200"
+    mc:Ignorable="d"
+    x:Class="FileOrganizer.Views.HomePageView"
+    x:DataType="vm:HomePageViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:icons="using:FluentIcons.Avalonia"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:FileOrganizer.ViewModels"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid RowDefinitions="Auto, Auto, Auto">
+        <Border
+            Classes="Card"
+            Grid.Row="0"
+            Height="60"
+            Margin="20,10,20,0">
+
+            <Grid ColumnDefinitions="Auto,Auto,* ,Auto">
+
+                <Border
+                    Background="#3B82F6"
+                    CornerRadius="13"
+                    Grid.Column="0"
+                    Height="40"
+                    Margin="10,0,0,0"
+                    Width="40">
+                    <icons:SymbolIcon Symbol="Folder" />
+                </Border>
+
+                <TextBlock
+                    Classes="LogoHome"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    Grid.Column="1"
+                    Margin="10,8,0,0"
+                    Text="File Organizer Pro" />
+                <TextBlock
+                    FontSize="12"
+                    Foreground="Gray"
+                    Grid.Column="1"
+                    Margin="13,34,0,0"
+                    Text="intelligent · automatic · safe" />
+
+                <Button
+                    Classes="UndoButton"
+                    Command="{Binding UndoButtonCommand}"
+                    Grid.Column="3"
+                    Height="45"
+                    Margin="0,0,10,0"
+                    Width="120">
+                    <StackPanel
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal"
+                        Spacing="8"
+                        VerticalAlignment="Center">
+                        <icons:SymbolIcon Symbol="ArrowUndo" />
+                        <TextBlock
+                            FontSize="15"
+                            FontWeight="SemiBold"
+                            Text="Undo" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Border>
+        <Border
+            Classes="Card"
+            Grid.Row="1"
+            Height="275"
+            Margin="20,30,20,0">
+
+            <StackPanel Orientation="Vertical" Spacing="10">
+                <StackPanel
+                    Margin="10,10,0,0"
+                    Orientation="Horizontal"
+                    Spacing="10">
+                    <icons:SymbolIcon Symbol="Folder" />
+                    <TextBlock FontWeight="Bold" Text="Folder to Organize" />
+                </StackPanel>
+                <Grid
+                    ColumnDefinitions="*, Auto, Auto"
+                    ColumnSpacing="10"
+                    Margin="10,0,10,0">
+                    <TextBox
+                        Background="#f8fafc"
+                        BorderBrush="{DynamicResource BorderBrushColor}"
+                        BorderThickness="2"
+                        CornerRadius="9"
+                        FontSize="20"
+                        Grid.Column="0"
+                        HorizontalAlignment="Stretch"
+                        Text="{Binding FolderPath}"
+                        Watermark="Select a Folder to sort" />
+                    <Button
+                        Classes="ChooseFolderButton"
+                        Command="{Binding OpenFolderPickerCommand}"
+                        Grid.Column="1"
+                        Height="46"
+                        Width="160">
+                        <StackPanel
+                            HorizontalAlignment="Center"
+                            Orientation="Horizontal"
+                            Spacing="8"
+                            VerticalAlignment="Center">
+                            <icons:SymbolIcon Symbol="FolderAdd" />
+                            <TextBlock
+                                FontSize="15"
+                                FontWeight="SemiBold"
+                                Text="Choose Folder" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button
+                        Classes="OrganizeButton"
+                        Command="{Binding OrganizeCommand}"
+                        Grid.Column="2"
+                        Height="46"
+                        Width="160">
+                        <StackPanel
+                            HorizontalAlignment="Center"
+                            Orientation="Horizontal"
+                            Spacing="8"
+                            VerticalAlignment="Center">
+                            <icons:SymbolIcon Symbol="FolderLightning" />
+                            <TextBlock
+                                FontSize="15"
+                                FontWeight="SemiBold"
+                                Text="Organize Now" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+                <Grid
+                    ColumnDefinitions="*, Auto, Auto"
+                    ColumnSpacing="10"
+                    Margin="10,0,10,0">
+                    <TextBox
+                        Background="#f8fafc"
+                        BorderBrush="{DynamicResource BorderBrushColor}"
+                        BorderThickness="2"
+                        CornerRadius="9"
+                        FontSize="20"
+                        Grid.Column="0"
+                        HorizontalAlignment="Stretch"
+                        Text="{Binding ExcludeFolderPath}"
+                        Watermark="Exclude File" />
+                    <Button
+                        Classes="ChooseFileButton"
+                        Command="{Binding OpenExcludeFolderPickerCommand}"
+                        Grid.Column="1"
+                        Height="46"
+                        Width="160">
+                        <StackPanel
+                            HorizontalAlignment="Center"
+                            Orientation="Horizontal"
+                            Spacing="8"
+                            VerticalAlignment="Center">
+                            <icons:SymbolIcon Symbol="DocumentAdd" />
+                            <TextBlock
+                                FontSize="15"
+                                FontWeight="SemiBold"
+                                Text="Choose File" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+                <Grid
+                    ColumnDefinitions="*,*,*,*"
+                    ColumnSpacing="10"
+                    Margin="10,10,10,10">
+                    <Border Classes="FolderInfo" Grid.Column="0">
+                        <StackPanel
+                            HorizontalAlignment="Center"
+                            Spacing="4"
+                            VerticalAlignment="Center">
+                            <icons:SymbolIcon HorizontalAlignment="Center" Symbol="Document" />
+                            <TextBlock HorizontalAlignment="Center" Text="Number" />
+                            <TextBlock
+                                FontSize="10"
+                                Foreground="LightGray"
+                                HorizontalAlignment="Center"
+                                Text="Files" />
+                        </StackPanel>
+                    </Border>
+
+                    <Border Classes="FolderInfo" Grid.Column="1">
+                        <StackPanel
+                            HorizontalAlignment="Center"
+                            Spacing="4"
+                            VerticalAlignment="Center">
+                            <icons:SymbolIcon HorizontalAlignment="Center" Symbol="Storage" />
+                            <TextBlock HorizontalAlignment="Center" Text="Number" />
+                            <TextBlock
+                                FontSize="10"
+                                Foreground="LightGray"
+                                HorizontalAlignment="Center"
+                                Text="Total Size" />
+                        </StackPanel>
+                    </Border>
+
+                    <Border Classes="FolderInfo" Grid.Column="2">
+                        <StackPanel
+                            HorizontalAlignment="Center"
+                            Spacing="4"
+                            VerticalAlignment="Center">
+                            <icons:SymbolIcon HorizontalAlignment="Center" Symbol="BracesVariable" />
+                            <TextBlock HorizontalAlignment="Center" Text="Number" />
+                            <TextBlock
+                                FontSize="10"
+                                Foreground="LightGray"
+                                HorizontalAlignment="Center"
+                                Text="Folders" />
+                        </StackPanel>
+                    </Border>
+
+                    <Border Classes="FolderInfo" Grid.Column="3">
+                        <StackPanel
+                            HorizontalAlignment="Center"
+                            Spacing="4"
+                            VerticalAlignment="Center">
+                            <icons:SymbolIcon HorizontalAlignment="Center" Symbol="DocumentCheckmark" />
+                            <TextBlock HorizontalAlignment="Center" Text="Number" />
+                            <TextBlock
+                                FontSize="10"
+                                Foreground="LightGray"
+                                HorizontalAlignment="Center"
+                                Text="Organized" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </StackPanel>
+        </Border>
+        <Grid ColumnDefinitions="0.5*,0.5*" Grid.Row="2">
+            <Border
+                Classes="Card"
+                Grid.Column="0"
+                Margin="20,30">
+
+                <StackPanel Margin="10" Spacing="12">
+
+                    <!--  Header  -->
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <icons:SymbolIcon Symbol="Options" />
+                        <TextBlock FontWeight="Bold" Text="Custom Folder Rule" />
+                    </StackPanel>
+
+                    <!--  Organize By  -->
+                    <TextBlock Text="Organize By" />
+
+                    <ComboBox
+                        BorderBrush="LightGray"
+                        BorderThickness="2"
+                        SelectedIndex="0">
+                        <ComboBoxItem Content="File Type" />
+                        <ComboBoxItem Content="Date Created" />
+                        <ComboBoxItem Content="Date Modified" />
+                        <ComboBoxItem Content="Extension" />
+                        <ComboBoxItem Content="First Letter" />
+                        <ComboBoxItem Content="File Size" />
+                    </ComboBox>
+
+                    <!--  Folder Structure  -->
+                    <TextBlock Text="Folder Structure" />
+
+                    <ComboBox
+                        BorderBrush="LightGray"
+                        BorderThickness="2"
+                        SelectedIndex="0">
+                        <ComboBoxItem Content="Single Folder" />
+                        <ComboBoxItem Content="Year" />
+                        <ComboBoxItem Content="Year → Month" />
+                        <ComboBoxItem Content="File Type" />
+                        <ComboBoxItem Content="Extension" />
+                        <ComboBoxItem Content="First Letter" />
+                    </ComboBox>
+
+                    <!--  Options  -->
+                    <CheckBox Content="Create subfolders automatically" />
+                    <CheckBox Content="Move folders with files" />
+                    <CheckBox Content="Include empty folders" />
+                    <CheckBox Content="Rename duplicate files" />
+                    <CheckBox Content="Keep organized folders inside the source folder" />
+                </StackPanel>
+            </Border>
+            <Border
+                Classes="Card"
+                Grid.Column="1"
+                Margin="20,10">
+
+                <StackPanel Margin="10" Spacing="12">
+
+                    <!--  Header  -->
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <icons:SymbolIcon Symbol="Options" />
+                        <TextBlock FontWeight="Bold" Text="AI powered File Organization" />
+                    </StackPanel>
+                    <!--  Organize By  -->
+                    <TextBlock Text="Your files are chaos.                                                                                                              I profit from the cure.                                                                                                              My AI does the work.                                                                                                              You fund the machine.                                                                                                              Time is expensive, and so am I.                                                                                                              Every organized folder fattens the balance sheet.                                                                                                              Convenience isn't a right. It's a premium product.                                                                                                             Thank you for contributing to my ever-growing pile of money" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,161 @@
+﻿<UserControl
+    Background="{DynamicResource PrimaryBackgroundColor}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
+    x:Class="FileOrganizer.Views.SettingsPageView"
+    x:DataType="vm:SettingsPageViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:FileOrganizer.ViewModels"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid>
+        <ScrollViewer>
+            <StackPanel
+                Margin="10,20"
+                Orientation="Vertical"
+                Spacing="10">
+                <Border Classes="Card" Height="180">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock
+                            FontWeight="SemiBold"
+                            Margin="10"
+                            Text="General" />
+                        <StackPanel
+                            Margin="10,0,10,10"
+                            Orientation="Horizontal"
+                            Spacing="642">
+                            <TextBlock Text="Theme" />
+                            <ComboBox BorderBrush="LightGray" SelectedIndex="0">
+                                <ComboBoxItem Content="Light" />
+                                <ComboBoxItem Content="Dark" />
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel
+                            Margin="10,0,10,10"
+                            Orientation="Horizontal"
+                            Spacing="650">
+                            <TextBlock Text="Color" />
+                            <ComboBox BorderBrush="LightGray" SelectedIndex="0">
+                                <ComboBoxItem Content="Blue" />
+                                <ComboBoxItem Content="Green" />
+                                <ComboBoxItem Content="Pink" />
+                                <ComboBoxItem Content="Violet" />
+                                <ComboBoxItem Content="Orange" />
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel
+                            Margin="10,0,10,10"
+                            Orientation="Horizontal"
+                            Spacing="400">
+                            <TextBlock Text="Default Location" />
+                            <TextBox Watermark="C:\\User\Download" Width="254" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+                <Border Classes="Card" Height="300">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock
+                            FontWeight="SemiBold"
+                            Margin="10"
+                            Text="Custom File Organization" />
+                        <TextBlock Margin="10,10,10,-2" Text="Below is json File Writer" />
+                        <TextBox
+                            Height="200"
+                            Margin="10"
+                            Text="Json File" />
+                    </StackPanel>
+                </Border>
+                <Border Classes="Card" Height="300">
+
+                    <StackPanel Orientation="Vertical">
+
+                        <TextBlock
+                            FontWeight="SemiBold"
+                            Margin="10"
+                            Text="Automation" />
+
+                        <!--  Organize on Startup  -->
+                        <Grid Margin="10,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="Organize on Startup" VerticalAlignment="Center" />
+                            <ToggleSwitch Grid.Column="1" />
+                        </Grid>
+
+                        <!--  Watch Folder  -->
+                        <Grid Margin="10,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="Watch Folder Continuously" VerticalAlignment="Center" />
+                            <ToggleSwitch Grid.Column="1" />
+                        </Grid>
+
+                        <!--  Every X Minutes  -->
+                        <Grid Margin="10,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="80" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="Organize Every" VerticalAlignment="Center" />
+
+                            <StackPanel
+                                Grid.Column="1"
+                                Orientation="Horizontal"
+                                Spacing="5">
+                                <NumericUpDown
+                                    Maximum="1440"
+                                    Minimum="1"
+                                    Value="30"
+                                    Width="55" />
+                                <TextBlock Text="min" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Grid>
+
+                        <!--  Downloads Finish  -->
+                        <Grid Margin="10,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="When Downloads Finish" VerticalAlignment="Center" />
+                            <ToggleSwitch Grid.Column="1" />
+                        </Grid>
+
+                        <!--  USB Inserted  -->
+                        <Grid Margin="10,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="When USB is Inserted" VerticalAlignment="Center" />
+                            <ToggleSwitch Grid.Column="1" />
+                        </Grid>
+
+                        <!--  Shutdown  -->
+                        <Grid Margin="10,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="Organize on Shutdown" VerticalAlignment="Center" />
+                            <ToggleSwitch Grid.Column="1" />
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
