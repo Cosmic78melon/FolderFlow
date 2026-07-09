@@ -25,24 +25,30 @@ public class Organizer: IOrganizer
             foreach (string file in files)
             {
                 string ext = file.Split('.')[^1];
-                foreach (DirectoryInfo subFolder in subFolders)
+                bool isFound = false;
+                int lengthOfSubFolders = subFolders.Length - 1;
+                for (int i = 0; i < lengthOfSubFolders; i++)
                 {
-                    /* ! The foreach loops checks one by one so if there is one created then the loop most of the time can't see it and when it wants to create a 
-                    new folder with same name and as a Result:
-                    It throws a error for creating duplicate folder 
-                    */ 
-                    if (String.Equals(subFolder.Name, ext, StringComparison.OrdinalIgnoreCase))
+                    foreach (DirectoryInfo subFolder in subFolders)
                     {
-                        string Filename = Path.GetFileName(file);
-                        File.Move(file, Path.Combine(subFolder.Name, Filename));
+                        if (String.Equals(subFolder.Name, ext, StringComparison.OrdinalIgnoreCase))
+                        {
+                            isFound = true;
+                        }
                     }
-                    else
-                    {
-                        string dirName = Path.Combine(folderPath, ext);
-                        DirectoryInfo _ = Directory.CreateDirectory(dirName);
-                        string FileName = Path.GetFileName(file);
-                        File.Move(file, Path.Combine(dirName, FileName));
-                    }
+                }
+
+                if (isFound)
+                {
+                    string Filename = Path.GetFileName(file);
+                    File.Move(file, Path.Combine(ext, Filename));
+                }
+                else
+                {
+                    string dirName = Path.Combine(folderPath, ext);
+                    DirectoryInfo _ = Directory.CreateDirectory(dirName);
+                    string FileName = Path.GetFileName(file);
+                    File.Move(file, Path.Combine(dirName, FileName));
                 }
             }
             return true;
