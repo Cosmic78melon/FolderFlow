@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls;
@@ -7,7 +8,7 @@ namespace FileOrganizer.Backend_Services;
 
 public class FilePicker(Func<TopLevel?> toplevel)
 {
-    public async Task<string?> FolderSelector()
+    public async Task<List<string?>> FolderSelector()
     {
         var topLevel = toplevel();
 
@@ -15,12 +16,16 @@ public class FilePicker(Func<TopLevel?> toplevel)
 
         var folders = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions()
         {
-            AllowMultiple = false,
-            Title = "Select a Folder"
+            Title = "Select a Folder To Organize",
+            AllowMultiple = true
         });
-        
-        var path = folders.FirstOrDefault(); 
-        if (path ==  null) return null;
-        return path.TryGetLocalPath();
+
+        if (folders != null && folders.Count > 0)
+        {
+            List<string?> selectedFolders = folders.Select( folder => folder.TryGetLocalPath()).Where(path => path != null).ToList();
+            return selectedFolders;
+        }
+
+        return new List<string?>();
     }
 }
