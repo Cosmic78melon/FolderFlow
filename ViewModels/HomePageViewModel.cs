@@ -1,23 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Avalonia.Metadata;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileOrganizer.Backend_Services;
 
 namespace FileOrganizer.ViewModels;
-
 public partial class HomePageViewModel : ViewModelBase
 {
-    private FilePicker _filePicker;
+    private FolderPickerDialouge _folderPickerDialouge;
+    private FilePickerDialouge _filePickerDialouge; 
     [ObservableProperty] private string? _folderPath;
-    [ObservableProperty] private string? _excludeFolderPath;
+    [ObservableProperty] private string? _excludeFilesPath;
     private IOrganizer _organizer;
 
     private List<string> ListOfFolders;
-    public HomePageViewModel(FilePicker filePicker, IOrganizer organizer)
+    private List<string> ListOfExcludedFiles;
+    public HomePageViewModel(FolderPickerDialouge folderPickerDialouge, FilePickerDialouge filePickerDialouge ,IOrganizer organizer)
     {
-        _filePicker = filePicker;
+        _folderPickerDialouge = folderPickerDialouge;
+        _filePickerDialouge = filePickerDialouge;
         _organizer = organizer;
     }
     
@@ -26,13 +29,13 @@ public partial class HomePageViewModel : ViewModelBase
     public void UndoButton()
     {
         FolderPath = string.Empty;
-        ExcludeFolderPath = string.Empty;
+        ExcludeFilesPath = string.Empty;
         ListOfFolders = new List<string>();
     }
 
     private async Task<List<string?>> OpenFolderPickerDialougeAsync()
     {
-        List<string?> path = await _filePicker.FolderSelector();
+        List<string?> path = await _folderPickerDialouge.FolderSelector();
         if (path.Count > 0)
         {
             return path;
@@ -47,34 +50,38 @@ public partial class HomePageViewModel : ViewModelBase
         if (paths.Count > 0)
         {
             ListOfFolders = paths;
-            foreach (string path in paths)
+            string[] temp = new string[paths.Count];
+            for(int i = 0; i < paths.Count; i++)
             {
-                FolderPath = string.Join(" | ", path);
+                temp[i] = paths[i];
             }
+            FolderPath = string.Join(" | ", temp);
         }
     }
-    
     [RelayCommand]
     public async Task OpenExcludeFolderPicker()
     {
-        List<string?> paths = await OpenFolderPickerDialougeAsync();
+        List<string?> paths = await _filePickerDialouge.FileSelector();
         if (paths.Count > 0)
         {
-            foreach (string path in paths)
+            ListOfExcludedFiles = paths;
+            string[] temps =  new string[paths.Count]; 
+            for (int i= 0; i < paths.Count; i++)
             {
-                ExcludeFolderPath = string.Join(" | ", path);
+                temps[i] = paths[i];
             }
+            ExcludeFilesPath  = string.Join(" | ", temps);
         }
     }
 
     [RelayCommand]
     public void Organize()
     {
-        bool isOrganized = _organizer.OrganizeFiles(ListOfFolders, ExcludeFolderPath);
+        bool isOrganized = _organizer.OrganizeFiles(ListOfFolders, ListOfExcludedFiles);
         if (isOrganized)
         {
             FolderPath = string.Empty;
-            ExcludeFolderPath = string.Empty;
+            ExcludeFilesPath = string.Empty;
         }
     }
     

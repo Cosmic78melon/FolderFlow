@@ -1,9 +1,6 @@
 using System;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
-using Avalonia.Data.Core.Plugins;
-using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using FileOrganizer.Backend_Services;
@@ -13,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace FileOrganizer;
 
-public partial class App : Application
+public class App : Application
 {
     public override void Initialize()
     {
@@ -27,7 +24,8 @@ public partial class App : Application
         collections.AddSingleton<HomePageViewModel>();
         collections.AddSingleton<SettingsPageViewModel>();
         collections.AddSingleton<IOrganizer, Organizer>();
-        collections.AddSingleton<FilePicker>();
+        collections.AddSingleton<FolderPickerDialouge>();
+        collections.AddSingleton<FilePickerDialouge>();
         collections.AddSingleton<Func<TopLevel?>>(_ => () =>
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime window)

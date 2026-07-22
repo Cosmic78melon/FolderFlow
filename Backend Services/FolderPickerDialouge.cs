@@ -6,13 +6,12 @@ using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 namespace FileOrganizer.Backend_Services;
 
-public class FilePicker(Func<TopLevel?> toplevel)
+public class FolderPickerDialouge(Func<TopLevel?> toplevel) 
 {
     public async Task<List<string?>> FolderSelector()
     {
         var topLevel = toplevel();
-
-        if (topLevel == null) return null;
+        if (topLevel == null) return new List<string?>();
 
         var folders = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions()
         {

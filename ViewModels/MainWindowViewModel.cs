@@ -13,19 +13,22 @@ public partial class MainWindowViewModel : ViewModelBase
     
     [ObservableProperty] private HomePageViewModel _homePageViewModel;
     [ObservableProperty] private SettingsPageViewModel _settingsPageViewModel;
-    private FilePicker _filePicker;
+    private FolderPickerDialouge _folderPickerDialouge;
+    private FilePickerDialouge _filePickerDialouge;
     private IOrganizer _organizer;
     public bool HomePageIsActive => SelectedViewModel == _homePageViewModel;
     public bool SettingsPageIsActive => SelectedViewModel == _settingsPageViewModel;
     
     public MainWindowViewModel(HomePageViewModel homePageViewModel, 
         SettingsPageViewModel settingsPageViewModel,
-        FilePicker filePicker,
+        FilePickerDialouge filePickerDialouge,
+        FolderPickerDialouge folderPickerDialouge,
         IOrganizer organizer)
     {
         _homePageViewModel = homePageViewModel;
         _settingsPageViewModel = settingsPageViewModel;
-        _filePicker = filePicker;
+        _folderPickerDialouge = folderPickerDialouge;
+        _filePickerDialouge = filePickerDialouge;
         _organizer = organizer;
         SelectedViewModel = _homePageViewModel;
     }

@@ -26,8 +26,7 @@ public class Organizer: IOrganizer
     private HashSet<string> VectorImg_ext = new();
     private HashSet<string> webFile_ext = new();
     HashSet<string> ignoreExt = new(StringComparer.OrdinalIgnoreCase)
-        { "msi", "bat", "dll", "exe", "sys", "dat","log", "temp","sav","cache","tmp", "so","com","cfg","drv","cmd","ini","lib" }; 
-    // TODO: No git add git
+        { "msi", "bat", "dll", "exe", "sys", "dat","log", "temp","sav","cache","tmp", "so","com","cfg","drv","cmd","ini","lib" };
     public void UndoMethod()
     {
         // TODO: Make a JSON to track where the and which folder are in which state
@@ -131,7 +130,7 @@ public class Organizer: IOrganizer
         }
     }
 
-    public bool OrganizeFiles(List<string?>? folderPaths, string includedFiles)
+    public bool OrganizeFiles(List<string?>? folderPaths, List<string?>? excludedFiles)
     {
         bool isAdded = extAdderHastsets();
 
@@ -155,111 +154,122 @@ public class Organizer: IOrganizer
                     string ext = char.ToUpper(raw_ext[0]) + raw_ext.Substring(1);
                     bool isFound = false;
                     int lengthOfSubFolders = subFolders.Length - 1;
+
+                    HashSet<string> exFileNames = new();
+                    foreach (string exFile in excludedFiles)
+                    {
+                        string exFileName = Path.GetFileName(exFile);
+                        exFileNames.Add(exFileName);
+                    }
+
+                    string FileName = Path.GetFileName(file);
+                    if (exFileNames.Contains(FileName))
+                        continue;
                     
                     if (ignoreExt.Contains(raw_ext))
                         continue;
                     
                     if (threeD_image.Contains(raw_ext))
                     {
-                        bool isSucc = ImageSorter(file, "3D Images");
+                        bool isSucc = FolderSorter(file, "3D Images");
                         if (isSucc) 
                             continue;
                     }
                     
                     if (audio_ext.Contains(raw_ext))
                     {
-                        bool isSucc = ImageSorter(file, "Audio Files");
+                        bool isSucc = FolderSorter(file, "Audio Files");
                         if (isSucc) 
                             continue;
                     }
                     
                     if (cad_ext.Contains(raw_ext))
                     {
-                        bool isSucc = ImageSorter(file, "Cad Files");
+                        bool isSucc = FolderSorter(file, "Cad Files");
                         if (isSucc) 
                             continue;
                     }
                     
                     if (codes_ext.Contains(raw_ext))
                     {
-                        bool isSucc = ImageSorter(file, "Codes");
+                        bool isSucc = FolderSorter(file, "Codes");
                         if (isSucc) 
                             continue;
                     }
                     
                     if (compressedFile_ext.Contains(raw_ext))
                     {
-                        bool isSucc = ImageSorter(file, "Compressed Files");
+                        bool isSucc = FolderSorter(file, "Compressed Files");
                         if (isSucc) 
                             continue;
                     }
                     
                     if (Ebooks_ext.Contains(raw_ext))
                     {
-                        bool isSucc = ImageSorter(file, "Ebooks");
+                        bool isSucc = FolderSorter(file, "Ebooks");
                         if (isSucc) 
                             continue;
                     }
                     
                     if (Fonts_ext.Contains(raw_ext))
                     {
-                        bool isSucc = ImageSorter(file, "Font Files");
+                        bool isSucc = FolderSorter(file, "Font Files");
                         if (isSucc) 
                             continue;
                     }
                     
                     if (normImg_ext.Contains(raw_ext))
                     {
-                        bool isSucc = ImageSorter(file, "Images");
+                        bool isSucc = FolderSorter(file, "Images");
                         if (isSucc) 
                             continue;
                     }
                     
                     if (Plugins_ext.Contains(raw_ext))
                     {
-                        bool isSucc = ImageSorter(file, "Plugins");
+                        bool isSucc = FolderSorter(file, "Plugins");
                         if (isSucc) 
                             continue;
                     }
 
                     if (Ransters_ext.Contains(raw_ext))
                     {
-                        bool isSucc = ImageSorter(file, "Raster Files");
+                        bool isSucc = FolderSorter(file, "Raster Files");
                         if (isSucc) 
                             continue;
                     }
 
                     if (RawImage_ext.Contains(raw_ext))
                     {
-                        bool isSucc = ImageSorter(file, "Raw Images");
+                        bool isSucc = FolderSorter(file, "Raw Images");
                         if (isSucc) 
                             continue;
                     }
 
                     if (SpreadSheet_ext.Contains(raw_ext))
                     {
-                        bool isSucc = ImageSorter(file, "Spreadsheets");
+                        bool isSucc = FolderSorter(file, "Spreadsheets");
                         if (isSucc) 
                             continue;
                     }
                     
                     if (VectorImg_ext.Contains(raw_ext))
                     {
-                        bool isSucc = ImageSorter(file, "Vector Images");
+                        bool isSucc = FolderSorter(file, "Vector Images");
                         if (isSucc) 
                             continue;
                     }
                     
                     if (video_ext.Contains(raw_ext))
                     {
-                        bool isSucc = ImageSorter(file, "Videos");
+                        bool isSucc = FolderSorter(file, "Videos");
                         if (isSucc) 
                             continue;
                     }
 
                     if (webFile_ext.Contains(raw_ext))
                     {
-                        bool isSucc = ImageSorter(file, "Web Files");
+                        bool isSucc = FolderSorter(file, "Web Files");
                         if (isSucc) 
                             continue;
                     }
@@ -299,7 +309,7 @@ public class Organizer: IOrganizer
         return true;
     }
 
-    private bool ImageSorter(string imagePath, string FolderName)
+    private bool FolderSorter(string imagePath, string FolderName)
     {
         try
         {
