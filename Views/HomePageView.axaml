@@ -147,7 +147,7 @@
                         Watermark="Exclude File" />
                     <Button
                         Classes="ChooseFileButton"
-                        Command="{Binding OpenExcludeFolderPickerCommand}"
+                        Command="{Binding OpenExcludeFilePickerCommand}"
                         Grid.Column="1"
                         Height="46"
                         Width="160">
@@ -174,7 +174,7 @@
                             Spacing="4"
                             VerticalAlignment="Center">
                             <icons:SymbolIcon HorizontalAlignment="Center" Symbol="Document" />
-                            <TextBlock HorizontalAlignment="Center" Text="Number" />
+                            <TextBlock HorizontalAlignment="Center" Text="{Binding TotalNumberOfFiles}" />
                             <TextBlock
                                 FontSize="10"
                                 Foreground="LightGray"
@@ -188,13 +188,13 @@
                             HorizontalAlignment="Center"
                             Spacing="4"
                             VerticalAlignment="Center">
-                            <icons:SymbolIcon HorizontalAlignment="Center" Symbol="Storage" />
-                            <TextBlock HorizontalAlignment="Center" Text="Number" />
+                            <icons:SymbolIcon HorizontalAlignment="Center" Symbol="BracesVariable" />
+                            <TextBlock HorizontalAlignment="Center" Text="{Binding TotalNumberOfFolder}" />
                             <TextBlock
                                 FontSize="10"
                                 Foreground="LightGray"
                                 HorizontalAlignment="Center"
-                                Text="Total Size" />
+                                Text="Folders" />
                         </StackPanel>
                     </Border>
 
@@ -203,13 +203,13 @@
                             HorizontalAlignment="Center"
                             Spacing="4"
                             VerticalAlignment="Center">
-                            <icons:SymbolIcon HorizontalAlignment="Center" Symbol="BracesVariable" />
-                            <TextBlock HorizontalAlignment="Center" Text="Number" />
+                            <icons:SymbolIcon HorizontalAlignment="Center" Symbol="Storage" />
+                            <TextBlock HorizontalAlignment="Center" Text="{Binding TotalStorage}" />
                             <TextBlock
                                 FontSize="10"
                                 Foreground="LightGray"
                                 HorizontalAlignment="Center"
-                                Text="Folders" />
+                                Text="Total Size" />
                         </StackPanel>
                     </Border>
 
@@ -219,7 +219,7 @@
                             Spacing="4"
                             VerticalAlignment="Center">
                             <icons:SymbolIcon HorizontalAlignment="Center" Symbol="DocumentCheckmark" />
-                            <TextBlock HorizontalAlignment="Center" Text="Number" />
+                            <TextBlock HorizontalAlignment="Center" Text="{Binding TotalNumberOfFileOrg}" />
                             <TextBlock
                                 FontSize="10"
                                 Foreground="LightGray"

@@ -129,25 +129,51 @@ public class Organizer: IOrganizer
             return false;
         }
     }
+    
+    public (int, int, double) FolderInfos(List<string?>? folderPaths)
+    {
+        int totalNumberOfFiles = 0;        
+        int totalNumberOfFolders = 0;
+        double totalSize = 0.0;
+        foreach(string folderPath in folderPaths)
+        {
+            if (!Directory.Exists(folderPath)) return (0,0,0.0);
+            DirectoryInfo dirs = new DirectoryInfo(folderPath);
+                
+            var options = new EnumerationOptions
+            {
+                RecurseSubdirectories = true,
+                IgnoreInaccessible = true
+            };
+            long totalBytes = dirs.EnumerateFiles("*", options)
+                .Sum(file => file.Length);
+                
+            double totalMB = (double) totalBytes / (1024*1024);
+            totalSize += totalMB;
+            totalNumberOfFolders++;
+            totalNumberOfFiles = Directory.GetFiles(folderPath).Length;
+        }
+        return (totalNumberOfFiles, totalNumberOfFolders, totalSize);
+    }
 
-    public bool OrganizeFiles(List<string?>? folderPaths, List<string?>? excludedFiles)
+    public (bool,int) OrganizeFiles(List<string?>? folderPaths, List<string?>? excludedFiles)
     {
         bool isAdded = extAdderHastsets();
 
-        if (!isAdded) return false;
+        if (!isAdded) return (false,0);
         
-        if (folderPaths == null || folderPaths.Count == 0) return false;
+        if (folderPaths == null || folderPaths.Count == 0) return (false,0);
         
+        int totalFileOrg = 0;
         foreach(string folderPath in folderPaths)
         {
-            if (!Directory.Exists(folderPath)) return false;
+            if (!Directory.Exists(folderPath)) return (false,0);
             try
             {
-                DirectoryInfo dirNames = new DirectoryInfo(folderPath);
-                DirectoryInfo[] subFolders = dirNames.GetDirectories();
-
-                string[] files = Directory.GetFiles(folderPath);
+                DirectoryInfo dirs = new DirectoryInfo(folderPath);
+                DirectoryInfo[] subFolders = dirs.GetDirectories();
                 
+                string[] files = Directory.GetFiles(folderPath);
                 foreach (string file in files)
                 {
                     string raw_ext = Path.GetExtension(file).TrimStart('.');
@@ -156,10 +182,13 @@ public class Organizer: IOrganizer
                     int lengthOfSubFolders = subFolders.Length - 1;
 
                     HashSet<string> exFileNames = new();
-                    foreach (string exFile in excludedFiles)
+                    if (excludedFiles != null)
                     {
-                        string exFileName = Path.GetFileName(exFile);
-                        exFileNames.Add(exFileName);
+                        foreach (string exFile in excludedFiles)
+                        {
+                            string exFileName = Path.GetFileName(exFile);
+                            exFileNames.Add(exFileName);
+                        }
                     }
 
                     string FileName = Path.GetFileName(file);
@@ -302,11 +331,11 @@ public class Organizer: IOrganizer
             catch (Exception ex) when(ex is PathTooLongException || ex is NotSupportedException || ex is ArgumentException || ex is DirectoryNotFoundException)
             {
                 
-                return false;
+                return (false,0);
             }
+            totalFileOrg += Directory.GetFiles(folderPath).Length;
         }
-
-        return true;
+        return (true, totalFileOrg);
     }
 
     private bool FolderSorter(string imagePath, string FolderName)

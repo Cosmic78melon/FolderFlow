@@ -17,6 +17,11 @@ public partial class HomePageViewModel : ViewModelBase
 
     private List<string> ListOfFolders;
     private List<string> ListOfExcludedFiles;
+
+    [ObservableProperty] private int? _totalNumberOfFiles = 0;
+    [ObservableProperty] private int? _totalNumberOfFolder = 0;
+    [ObservableProperty] private double? _totalStorage = 0.0;
+    [ObservableProperty] private int? _totalNumberOfFileOrg = 0;
     public HomePageViewModel(FolderPickerDialouge folderPickerDialouge, FilePickerDialouge filePickerDialouge ,IOrganizer organizer)
     {
         _folderPickerDialouge = folderPickerDialouge;
@@ -31,6 +36,11 @@ public partial class HomePageViewModel : ViewModelBase
         FolderPath = string.Empty;
         ExcludeFilesPath = string.Empty;
         ListOfFolders = new List<string>();
+        ListOfExcludedFiles = new List<string>();
+        TotalNumberOfFileOrg = 0;
+        TotalNumberOfFiles = 0;
+        TotalNumberOfFolder = 0;
+        TotalStorage = 0;
     }
 
     private async Task<List<string?>> OpenFolderPickerDialougeAsync()
@@ -56,10 +66,12 @@ public partial class HomePageViewModel : ViewModelBase
                 temp[i] = paths[i];
             }
             FolderPath = string.Join(" | ", temp);
+
+            (TotalNumberOfFiles, TotalNumberOfFolder, TotalStorage) = _organizer.FolderInfos(paths);
         }
     }
     [RelayCommand]
-    public async Task OpenExcludeFolderPicker()
+    public async Task OpenExcludeFilePicker()
     {
         List<string?> paths = await _filePickerDialouge.FileSelector();
         if (paths.Count > 0)
@@ -77,7 +89,8 @@ public partial class HomePageViewModel : ViewModelBase
     [RelayCommand]
     public void Organize()
     {
-        bool isOrganized = _organizer.OrganizeFiles(ListOfFolders, ListOfExcludedFiles);
+        bool isOrganized;
+        (isOrganized, TotalNumberOfFileOrg) = _organizer.OrganizeFiles(ListOfFolders, ListOfExcludedFiles);
         if (isOrganized)
         {
             FolderPath = string.Empty;
