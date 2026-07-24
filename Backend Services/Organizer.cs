@@ -10,28 +10,14 @@ namespace FileOrganizer.Backend_Services;
 public class Organizer: IOrganizer
 {
     //* The Website URL: https://fileinfo.com/filetypes/audio
-    private HashSet<string> normImg_ext = new();
-    private HashSet<string> video_ext = new();
-    private HashSet<string> threeD_image = new();
-    private HashSet<string> audio_ext = new();
-    private HashSet<string> cad_ext = new();
-    private HashSet<string> codes_ext = new();
-    private HashSet<string> compressedFile_ext = new();
-    private HashSet<string> Ebooks_ext = new();
-    private HashSet<string> Fonts_ext = new();
-    private HashSet<string> Plugins_ext = new();
-    private HashSet<string> Ransters_ext = new();
-    private HashSet<string> RawImage_ext = new();
-    private HashSet<string> SpreadSheet_ext = new();
-    private HashSet<string> VectorImg_ext = new();
-    private HashSet<string> webFile_ext = new();
     HashSet<string> ignoreExt = new(StringComparer.OrdinalIgnoreCase)
         { "msi", "bat", "dll", "exe", "sys", "dat","log", "temp","sav","cache","tmp", "so","com","cfg","drv","cmd","ini","lib" };
+
+    private Dictionary<string, HashSet<string>> category = new ();
     public void UndoMethod()
     {
         // TODO: Make a JSON to track where the and which folder are in which state
     }
-
     private string[] ext_creator(string textFileName)
     {
         var uri = new Uri($"avares://FileOrganizer/Assets/Data/{textFileName}.txt");
@@ -41,86 +27,38 @@ public class Organizer: IOrganizer
         string[] exts = content.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
         return exts;
     }
-
-    private bool extAdderHastsets()
+    
+    private void Load(string key, string fileName)
+    {
+        string[] exts = ext_creator(fileName);
+        if (!category.ContainsKey(key))
+        {
+            category[key] = new HashSet<string>();
+        }
+        for (int i = 0; i < exts.Length; i++)
+        {
+            category[key].Add(exts[i]);
+        }
+    }
+    private bool CategoryInit()
     {
         try
         {
-            string[] threeDExt = ext_creator("3D_Images_Extension");
-            for (int i = 0; i < threeDExt.Length; i++)
-            {
-                threeD_image.Add(threeDExt[i]);
-            }
-            string[] audio_exts = ext_creator("AudioExtension");
-            for (int i = 0; i < audio_exts.Length; i++)
-            {
-                audio_ext.Add(audio_exts[i]);
-            }
-            string[] cadExt = ext_creator("CadExtension");
-            for (int i = 0; i < cadExt.Length; i++)
-            {
-                cad_ext.Add(cadExt[i]);
-            }
-            string[] codesExt = ext_creator("CodesExtension");
-            for (int i = 0; i < codesExt.Length; i++)
-            {
-                codes_ext.Add(codesExt[i]);
-            }
-            string[] compExt = ext_creator("CompressedExtension");
-            for (int i = 0; i < compExt.Length; i++)
-            {
-                compressedFile_ext.Add(compExt[i]);
-            }
-            string[] ebookExt = ext_creator("EbooksExtension");
-            for (int i = 0; i < ebookExt.Length; i++)
-            {
-                Ebooks_ext.Add(ebookExt[i]);
-            }
-            string[] fontExt = ext_creator("FontsExtension");
-            for (int i = 0; i < fontExt.Length; i++)
-            {
-                Fonts_ext.Add(fontExt[i]);
-            }
-            string[] normExt = ext_creator("ImageExtensions");
-            for (int i = 0; i < normExt.Length; i++)
-            {
-                normImg_ext.Add(normExt[i]);
-            }
-            string[] pluginExt = ext_creator("PluginsFilesExtension");
-            for (int i = 0; i < pluginExt.Length; i++)
-            {
-                Plugins_ext.Add(pluginExt[i]);
-            }
-            string[] rasterExt = ext_creator("Raster_ImagesExtension");
-            for (int i = 0; i < rasterExt.Length; i++)
-            {
-                Ransters_ext.Add(rasterExt[i]);
-            }
-            string[] rawExt = ext_creator("RawImagesExtension");
-            for (int i = 0; i < rawExt.Length; i++)
-            {
-                RawImage_ext.Add(rawExt[i]);
-            }
-            string[] spreadExt = ext_creator("SpreadsheetsExtension");
-            for (int i = 0; i < spreadExt.Length; i++)
-            {
-                SpreadSheet_ext.Add(spreadExt[i]);
-            }
-            string[] vectorExt = ext_creator("Vector_Images_Extension");
-            for (int i = 0; i < vectorExt.Length; i++)
-            {
-                VectorImg_ext.Add(vectorExt[i]);
-            }
-            string[] videoExt = ext_creator("VideoExtension");
-            for (int i = 0; i < videoExt.Length; i++)
-            {
-                video_ext.Add(videoExt[i]);
-            }
-            string[] webExt = ext_creator("WebFilesExtension");
-            for (int i = 0; i < webExt.Length; i++)
-            {
-                webFile_ext.Add(webExt[i]);
-            }
+            Load("3D images", "3D_Images_Extension");
+            Load("Audio", "AudioExtension");
+            Load("Cad Document", "CadExtension");
+            Load("Codes", "CodesExtension");
+            Load("Compressed Files", "CompressedExtension");
+            Load("Ebooks", "EbooksExtension");
+            Load("Fonts", "FontsExtension");
+            Load("Images", "ImageExtensions");
+            Load("Plugins", "PluginsFilesExtension");
+            Load("Raster Files", "Raster_ImagesExtension");
+            Load("Raw Images", "RawImagesExtension");
+            Load("SpreadSheets", "SpreadsheetsExtension");
+            Load("Vector Images", "Vector_Images_Extension");
+            Load("Videos", "VideoExtension");
+            Load("Web Files", "WebFilesExtension");
 
             return true;
         }
@@ -151,14 +89,15 @@ public class Organizer: IOrganizer
             double totalMB = (double) totalBytes / (1024*1024);
             totalSize += totalMB;
             totalNumberOfFolders++;
-            totalNumberOfFiles = Directory.GetFiles(folderPath).Length;
+            totalNumberOfFiles += Directory.GetFiles(folderPath).Length;
         }
         return (totalNumberOfFiles, totalNumberOfFolders, totalSize);
     }
 
     public (bool,int) OrganizeFiles(List<string?>? folderPaths, List<string?>? excludedFiles)
     {
-        bool isAdded = extAdderHastsets();
+        // TODO: There is no doucment section so Add that
+        bool isAdded = CategoryInit();
 
         if (!isAdded) return (false,0);
         
@@ -181,127 +120,43 @@ public class Organizer: IOrganizer
                     bool isFound = false;
                     int lengthOfSubFolders = subFolders.Length - 1;
 
-                    HashSet<string> exFileNames = new();
+                    HashSet<string> excludedFileNames = new();
                     if (excludedFiles != null)
                     {
                         foreach (string exFile in excludedFiles)
                         {
                             string exFileName = Path.GetFileName(exFile);
-                            exFileNames.Add(exFileName);
+                            excludedFileNames.Add(exFileName);
                         }
                     }
-
                     string FileName = Path.GetFileName(file);
-                    if (exFileNames.Contains(FileName))
+                    if (excludedFileNames.Contains(FileName))
                         continue;
                     
                     if (ignoreExt.Contains(raw_ext))
                         continue;
-                    
-                    if (threeD_image.Contains(raw_ext))
-                    {
-                        bool isSucc = FolderSorter(file, "3D Images");
-                        if (isSucc) 
-                            continue;
-                    }
-                    
-                    if (audio_ext.Contains(raw_ext))
-                    {
-                        bool isSucc = FolderSorter(file, "Audio Files");
-                        if (isSucc) 
-                            continue;
-                    }
-                    
-                    if (cad_ext.Contains(raw_ext))
-                    {
-                        bool isSucc = FolderSorter(file, "Cad Files");
-                        if (isSucc) 
-                            continue;
-                    }
-                    
-                    if (codes_ext.Contains(raw_ext))
-                    {
-                        bool isSucc = FolderSorter(file, "Codes");
-                        if (isSucc) 
-                            continue;
-                    }
-                    
-                    if (compressedFile_ext.Contains(raw_ext))
-                    {
-                        bool isSucc = FolderSorter(file, "Compressed Files");
-                        if (isSucc) 
-                            continue;
-                    }
-                    
-                    if (Ebooks_ext.Contains(raw_ext))
-                    {
-                        bool isSucc = FolderSorter(file, "Ebooks");
-                        if (isSucc) 
-                            continue;
-                    }
-                    
-                    if (Fonts_ext.Contains(raw_ext))
-                    {
-                        bool isSucc = FolderSorter(file, "Font Files");
-                        if (isSucc) 
-                            continue;
-                    }
-                    
-                    if (normImg_ext.Contains(raw_ext))
-                    {
-                        bool isSucc = FolderSorter(file, "Images");
-                        if (isSucc) 
-                            continue;
-                    }
-                    
-                    if (Plugins_ext.Contains(raw_ext))
-                    {
-                        bool isSucc = FolderSorter(file, "Plugins");
-                        if (isSucc) 
-                            continue;
-                    }
 
-                    if (Ransters_ext.Contains(raw_ext))
+                    FileInfo fileinfo = new FileInfo(file);
+                    long fileMB = fileinfo.Length / (1024 * 1024);
+                    bool isMoved = false;
+                    if (fileMB >= 1024)
                     {
-                        bool isSucc = FolderSorter(file, "Raster Files");
-                        if (isSucc) 
+                        isMoved = FolderSorter(file, "Large Files");
+                        if (isMoved)
                             continue;
                     }
-
-                    if (RawImage_ext.Contains(raw_ext))
+                    foreach (var format in category)
                     {
-                        bool isSucc = FolderSorter(file, "Raw Images");
-                        if (isSucc) 
-                            continue;
-                    }
-
-                    if (SpreadSheet_ext.Contains(raw_ext))
-                    {
-                        bool isSucc = FolderSorter(file, "Spreadsheets");
-                        if (isSucc) 
-                            continue;
+                        if (format.Value.Contains(raw_ext))
+                        {
+                            isMoved = FolderSorter(file, format.Key);
+                            if (isMoved)
+                                break;  
+                        }
                     }
                     
-                    if (VectorImg_ext.Contains(raw_ext))
-                    {
-                        bool isSucc = FolderSorter(file, "Vector Images");
-                        if (isSucc) 
-                            continue;
-                    }
-                    
-                    if (video_ext.Contains(raw_ext))
-                    {
-                        bool isSucc = FolderSorter(file, "Videos");
-                        if (isSucc) 
-                            continue;
-                    }
-
-                    if (webFile_ext.Contains(raw_ext))
-                    {
-                        bool isSucc = FolderSorter(file, "Web Files");
-                        if (isSucc) 
-                            continue;
-                    }
+                    if (isMoved)
+                        continue;
                     
                     for (int i = 0; i < lengthOfSubFolders; i++)
                     {
@@ -338,36 +193,35 @@ public class Organizer: IOrganizer
         return (true, totalFileOrg);
     }
 
-    private bool FolderSorter(string imagePath, string FolderName)
+    private bool FolderSorter(string FilePath, string FolderName)
     {
         try
         {
-            string fileName = Path.GetFileName(imagePath);
-            string? folderPath = Path.GetDirectoryName(imagePath);
+            string fileName = Path.GetFileName(FilePath);
+            string? folderName = Path.GetDirectoryName(FilePath);
 
-            if (folderPath == null)
-                return false;
+            if (folderName == null)
+            {
+                Console.WriteLine("Folder is Null");
+                return true;
+            } 
+                
 
-            string extension = Path.GetExtension(imagePath)
+            string extension = Path.GetExtension(FilePath)
                 .TrimStart('.')
                 .ToUpperInvariant();
 
-            string destination = Path.Combine(folderPath, FolderName, extension);
+            string destination = Path.Combine(folderName, FolderName, extension);
 
             Directory.CreateDirectory(destination);
 
-            File.Move(imagePath, Path.Combine(destination, fileName));
-
+            File.Move(FilePath, Path.Combine(destination, fileName));
             return true;
         }
-        catch
+        catch (Exception e)
         {
+            Console.WriteLine("The error in FolderSorter: ", e);
             return false;
         }
-    }
-
-    public void excludeFiles()
-    {
-        // TODO: exclude the folders so the excluded folders are not organized
     }
 }
