@@ -59,7 +59,7 @@ public class Organizer: IOrganizer
             Load("Vector Images", "Vector_Images_Extension");
             Load("Videos", "VideoExtension");
             Load("Web Files", "WebFilesExtension");
-
+            Load("Documents", "Common_documentsExtension");
             return true;
         }
         catch (Exception e)
@@ -96,7 +96,6 @@ public class Organizer: IOrganizer
 
     public (bool,int) OrganizeFiles(List<string?>? folderPaths, List<string?>? excludedFiles)
     {
-        // TODO: There is no doucment section so Add that
         bool isAdded = CategoryInit();
 
         if (!isAdded) return (false,0);

@@ -253,10 +253,7 @@
                         SelectedIndex="0">
                         <ComboBoxItem Content="File Type" />
                         <ComboBoxItem Content="Date Created" />
-                        <ComboBoxItem Content="Date Modified" />
                         <ComboBoxItem Content="Extension" />
-                        <ComboBoxItem Content="First Letter" />
-                        <ComboBoxItem Content="File Size" />
                     </ComboBox>
 
                     <!--  Folder Structure  -->
@@ -269,23 +266,19 @@
                         <ComboBoxItem Content="Single Folder" />
                         <ComboBoxItem Content="Year" />
                         <ComboBoxItem Content="Year → Month" />
-                        <ComboBoxItem Content="File Type" />
                         <ComboBoxItem Content="Extension" />
-                        <ComboBoxItem Content="First Letter" />
                     </ComboBox>
 
                     <!--  Options  -->
-                    <CheckBox Content="Create subfolders automatically" />
                     <CheckBox Content="Move folders with files" />
-                    <CheckBox Content="Include empty folders" />
                     <CheckBox Content="Rename duplicate files" />
-                    <CheckBox Content="Keep organized folders inside the source folder" />
+                    <CheckBox Content="Move it to different Path" />
                 </StackPanel>
             </Border>
             <Border
                 Classes="Card"
                 Grid.Column="1"
-                Margin="20,10">
+                Margin="20,30">
 
                 <StackPanel Margin="10" Spacing="12">
 
@@ -295,7 +288,7 @@
                         <TextBlock FontWeight="Bold" Text="AI powered File Organization" />
                     </StackPanel>
                     <!--  Organize By  -->
-                    <TextBlock Text="Your files are chaos.                                                                                                              I profit from the cure.                                                                                                              My AI does the work.                                                                                                              You fund the machine.                                                                                                              Time is expensive, and so am I.                                                                                                              Every organized folder fattens the balance sheet.                                                                                                              Convenience isn't a right. It's a premium product.                                                                                                             Thank you for contributing to my ever-growing pile of money" TextWrapping="Wrap" />
+                    <TextBlock Text="Your files are chaos. I profit from the cure. My AI does the work. You fund the machine. Time is expensive, and so am I. Every organized folder fattens the balance sheet. Convenience isn't a right. It's a premium product. Thank you for contributing to my ever-growing pile of money" TextWrapping="Wrap" />
                 </StackPanel>
             </Border>
         </Grid>
