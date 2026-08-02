@@ -16,13 +16,15 @@ public partial class MainWindowViewModel : ViewModelBase
     private FolderPickerDialouge _folderPickerDialouge;
     private FilePickerDialouge _filePickerDialouge;
     private IOrganizer _organizer;
+    private IToastService _toastService;
     public bool HomePageIsActive => SelectedViewModel == _homePageViewModel;
     public bool SettingsPageIsActive => SelectedViewModel == _settingsPageViewModel;
-    
+
     public MainWindowViewModel(HomePageViewModel homePageViewModel, 
         SettingsPageViewModel settingsPageViewModel,
         FilePickerDialouge filePickerDialouge,
         FolderPickerDialouge folderPickerDialouge,
+        IToastService toastService,
         IOrganizer organizer)
     {
         _homePageViewModel = homePageViewModel;
@@ -30,6 +32,7 @@ public partial class MainWindowViewModel : ViewModelBase
         _folderPickerDialouge = folderPickerDialouge;
         _filePickerDialouge = filePickerDialouge;
         _organizer = organizer;
+        _toastService = toastService;
         SelectedViewModel = _homePageViewModel;
     }
     

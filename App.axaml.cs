@@ -26,6 +26,7 @@ public class App : Application
         collections.AddSingleton<IOrganizer, Organizer>();
         collections.AddSingleton<FolderPickerDialouge>();
         collections.AddSingleton<FilePickerDialouge>();
+        collections.AddSingleton<IToastService, ToastService>();
         collections.AddSingleton<Func<TopLevel?>>(_ => () =>
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime window)

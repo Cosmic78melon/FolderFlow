@@ -1,39 +1,45 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:FileOrganizer.ViewModels"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="FileOrganizer.Views.MainWindow"
-        x:DataType="vm:MainWindowViewModel"
-        Icon="/Assets/avalonia-logo.ico"
-        xmlns:icons="using:FluentIcons.Avalonia"
-        Background="{DynamicResource PrimarySideMenuBackgroundColor}"
-        Title="FileOrganizer">
+<Window
+    Background="{DynamicResource PrimarySideMenuBackgroundColor}"
+    Icon="/Assets/avalonia-logo.ico"
+    Title="FileOrganizer"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
+    x:Class="FileOrganizer.Views.MainWindow"
+    x:DataType="vm:MainWindowViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:icons="using:FluentIcons.Avalonia"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:msg="https://github.com/xiyaowong/Message.Avalonia"
+    xmlns:vm="using:FileOrganizer.ViewModels"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel/>
+        <!--
+            This only sets the DataContext for the previewer in an IDE,
+            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
+        -->
+        <vm:MainWindowViewModel />
     </Design.DataContext>
-    
+
     <Grid ColumnDefinitions="200, *">
-        <ContentControl Grid.Column="1" Content="{Binding SelectedViewModel}"></ContentControl>
-        
+        <ContentControl Content="{Binding SelectedViewModel}" Grid.Column="1" />
+
         <Border Grid.Column="0">
             <StackPanel Orientation="Vertical" Spacing="10">
-                <icons:SymbolIcon Symbol="VehicleTruckProfile" FontSize="60"></icons:SymbolIcon>
-                <Separator Margin="0 5 0 0" Width="200"></Separator>
+                <icons:SymbolIcon FontSize="60" Symbol="VehicleTruckProfile" />
+                <Separator Margin="0,5,0,0" Width="200" />
                 <Button Classes.active="{Binding HomePageIsActive}" Command="{Binding GoToHomeCommand}">
                     <StackPanel Orientation="Horizontal" Spacing="9">
-                        <icons:SymbolIcon></icons:SymbolIcon>
-                        <Label Content="Home"></Label>
+                        <icons:SymbolIcon />
+                        <Label Content="Home" />
                     </StackPanel>
                 </Button>
                 <Button Classes.active="{Binding SettingsPageIsActive}" Command="{Binding GoToSettingsCommand}">
                     <StackPanel Orientation="Horizontal" Spacing="9">
-                       <icons:SymbolIcon Symbol="Settings"></icons:SymbolIcon>
-                        <Label Content="Settings"></Label>
+                        <icons:SymbolIcon Symbol="Settings" />
+                        <Label Content="Settings" />
                     </StackPanel>
                 </Button>
             </StackPanel>

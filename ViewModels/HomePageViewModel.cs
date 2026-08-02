@@ -10,25 +10,36 @@ namespace FileOrganizer.ViewModels;
 public partial class HomePageViewModel : ViewModelBase
 {
     private FolderPickerDialouge _folderPickerDialouge;
-    private FilePickerDialouge _filePickerDialouge; 
+    private FilePickerDialouge _filePickerDialouge;
+    private IToastService _toastService;
     [ObservableProperty] private string? _folderPath;
     [ObservableProperty] private string? _excludeFilesPath;
     private IOrganizer _organizer;
 
     private List<string> ListOfFolders;
     private List<string> ListOfExcludedFiles;
+    
+    public ToastNotificationViewModel Toast =>
+        _toastService.Notification;
 
     [ObservableProperty] private int? _totalNumberOfFiles = 0;
     [ObservableProperty] private int? _totalNumberOfFolder = 0;
     [ObservableProperty] private double? _totalStorage = 0.0;
     [ObservableProperty] private int? _totalNumberOfFileOrg = 0;
-    public HomePageViewModel(FolderPickerDialouge folderPickerDialouge, FilePickerDialouge filePickerDialouge ,IOrganizer organizer)
+    public HomePageViewModel(FolderPickerDialouge folderPickerDialouge, FilePickerDialouge filePickerDialouge ,IOrganizer organizer, IToastService toastService)
     {
         _folderPickerDialouge = folderPickerDialouge;
         _filePickerDialouge = filePickerDialouge;
         _organizer = organizer;
+        _toastService = toastService;
     }
     
+    enum SymbolTypes
+    {
+        CheckmarkCircle = 100,
+        Info = 111,
+        DismissCircle = 404
+    }
     
     [RelayCommand]
     public void UndoButton()
@@ -87,7 +98,7 @@ public partial class HomePageViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    public void Organize()
+    public async Task Organize()
     {
         bool isOrganized;
         (isOrganized, TotalNumberOfFileOrg) = _organizer.OrganizeFiles(ListOfFolders, ListOfExcludedFiles);
@@ -95,7 +106,12 @@ public partial class HomePageViewModel : ViewModelBase
         {
             FolderPath = string.Empty;
             ExcludeFilesPath = string.Empty;
+            SymbolTypes Success = (SymbolTypes)100;
+            await _toastService.ShowMessageAsync("Organized", "Folder is Successfully Organized", true, Success.ToString(), "#008000", "#50C878");
         }
+
+        SymbolTypes failed = (SymbolTypes)404;
+        await _toastService.ShowMessageAsync("Folder is Not Organized", "Something Went Wrong", true, failed.ToString(), "Red", "#D10000");
     }
     
 }
