@@ -257,29 +257,31 @@
                     <ComboBox
                         BorderBrush="LightGray"
                         BorderThickness="2"
-                        SelectedIndex="0">
-                        <ComboBoxItem Content="File Type" />
-                        <ComboBoxItem Content="Date Created" />
-                        <ComboBoxItem Content="Extension" />
+                        ItemsSource="{Binding organizationMethods}"
+                        SelectedItem="{Binding SeletectedMethod}">
+                        <ComboBox.DataTemplates>
+                            <DataTemplate DataType="vm:FolderStruct">
+                                <TextBlock Text="{Binding DisplayedName}" />
+                            </DataTemplate>
+                        </ComboBox.DataTemplates>
                     </ComboBox>
-
                     <!--  Folder Structure  -->
                     <TextBlock Text="Folder Structure" />
 
                     <ComboBox
                         BorderBrush="LightGray"
                         BorderThickness="2"
-                        SelectedIndex="0">
-                        <ComboBoxItem Content="Single Folder" />
-                        <ComboBoxItem Content="Year" />
-                        <ComboBoxItem Content="Year → Month" />
-                        <ComboBoxItem Content="Extension" />
+                        ItemsSource="{Binding Attributes_Of_FS}"
+                        SelectedItem="{Binding SelectedItem}">
+                        <ComboBox.DataTemplates>
+                            <DataTemplate DataType="vm:FolderStruct">
+                                <TextBlock Text="{Binding DisplayedName}" />
+                            </DataTemplate>
+                        </ComboBox.DataTemplates>
                     </ComboBox>
-
                     <!--  Options  -->
                     <CheckBox Content="Move folders with files" />
                     <CheckBox Content="Rename duplicate files" />
-                    <CheckBox Content="Move it to different Path" />
                 </StackPanel>
             </Border>
             <Border

@@ -14,10 +14,6 @@ public class Organizer: IOrganizer
         { "msi", "bat", "dll", "exe", "sys", "dat","log", "temp","sav","cache","tmp", "so","com","cfg","drv","cmd","ini","lib" };
 
     private Dictionary<string, HashSet<string>> category = new ();
-    public void UndoMethod()
-    {
-        // TODO: Make a JSON to track where the and which folder are in which state
-    }
     private string[] ext_creator(string textFileName)
     {
         var uri = new Uri($"avares://FileOrganizer/Assets/Data/{textFileName}.txt");
@@ -222,5 +218,9 @@ public class Organizer: IOrganizer
             Console.WriteLine("The error in FolderSorter: ", e);
             return false;
         }
+    }
+    public void UndoMethod()
+    {
+        // TODO: Make a JSON to track where the and which folder are in which state
     }
 }

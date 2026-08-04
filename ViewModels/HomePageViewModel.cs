@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Metadata;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -7,6 +9,18 @@ using CommunityToolkit.Mvvm.Input;
 using FileOrganizer.Backend_Services;
 
 namespace FileOrganizer.ViewModels;
+
+public class FolderStruct
+{
+    public required string? type {get; set;} 
+    public required string? DisplayedName {get; set;} 
+}
+
+public class OrganizatoinTypes
+{
+    public required string? type {get; set;} 
+    public required string? DisplayedName {get; set;}
+}
 public partial class HomePageViewModel : ViewModelBase
 {
     private FolderPickerDialouge _folderPickerDialouge;
@@ -14,8 +28,9 @@ public partial class HomePageViewModel : ViewModelBase
     private IToastService _toastService;
     [ObservableProperty] private string? _folderPath;
     [ObservableProperty] private string? _excludeFilesPath;
+    [ObservableProperty] private FolderStruct _selectedItem;
+    [ObservableProperty] private OrganizatoinTypes _seletectedMethod;
     private IOrganizer _organizer;
-
     private List<string> ListOfFolders;
     private List<string> ListOfExcludedFiles;
     
@@ -26,12 +41,58 @@ public partial class HomePageViewModel : ViewModelBase
     [ObservableProperty] private int? _totalNumberOfFolder = 0;
     [ObservableProperty] private double? _totalStorage = 0.0;
     [ObservableProperty] private int? _totalNumberOfFileOrg = 0;
+
+    public ObservableCollection<OrganizatoinTypes> organizationMethods { get; } =
+    [
+        new OrganizatoinTypes
+        {
+            DisplayedName = "File Type",
+            type = "typeWise"
+        },
+        new OrganizatoinTypes
+        {
+            DisplayedName = "Date Created",
+            type = "datewise"
+        },
+        new OrganizatoinTypes
+        {
+            DisplayedName = "Extension",
+            type = "extensionwise"
+        }
+    ];
+    
+    public ObservableCollection<FolderStruct> Attributes_Of_FS { get; } =
+    [
+        new FolderStruct
+        {
+            DisplayedName = "Single Folder",
+            type = "singleFold"
+        },
+        new FolderStruct
+        {
+            DisplayedName = "Subfolders → Year",
+            type = "yearBasedFold"
+        },
+        new FolderStruct
+        {
+            DisplayedName = "Subfolders → Year → Month",
+            type = "yearTomonBasedFold"
+        },
+        new FolderStruct
+        {
+            DisplayedName = "Subfolders → Extension",
+            type = "extensionFold"
+        }
+    ];
+    
     public HomePageViewModel(FolderPickerDialouge folderPickerDialouge, FilePickerDialouge filePickerDialouge ,IOrganizer organizer, IToastService toastService)
     {
         _folderPickerDialouge = folderPickerDialouge;
         _filePickerDialouge = filePickerDialouge;
         _organizer = organizer;
         _toastService = toastService;
+        SelectedItem = Attributes_Of_FS.FirstOrDefault();
+        SeletectedMethod = organizationMethods.FirstOrDefault();
     }
     
     enum SymbolTypes
@@ -40,7 +101,7 @@ public partial class HomePageViewModel : ViewModelBase
         Info = 111,
         DismissCircle = 404
     }
-    
+
     [RelayCommand]
     public void UndoButton()
     {
