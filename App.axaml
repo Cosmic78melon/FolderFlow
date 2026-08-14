@@ -1,5 +1,5 @@
 <Application
-    RequestedThemeVariant="Default"
+    RequestedThemeVariant="Dark"
     x:Class="FileOrganizer.App"
     xmlns="https://github.com/avaloniaui"
     xmlns:local="using:FileOrganizer"
@@ -24,20 +24,19 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 
-        <SolidColorBrush x:Key="PrimaryBackgroundColor">#f0f4f8</SolidColorBrush>
-        <SolidColorBrush x:Key="PrimarySideMenuBackgroundColor">#ffffff</SolidColorBrush>
-        <SolidColorBrush x:Key="PrimaryCardColor">#FFFFFF</SolidColorBrush>
-        <SolidColorBrush x:Key="PrimaryCardHoverColor">#f8faff</SolidColorBrush>
-        <SolidColorBrush x:Key="BorderBrushColor">#e2e9f2</SolidColorBrush>
-
+        <SolidColorBrush x:Key="PrimaryBackgroundColor">#0B1220</SolidColorBrush>
+        <SolidColorBrush x:Key="PrimarySideMenuBackgroundColor">#08101D</SolidColorBrush>
+        <SolidColorBrush x:Key="PrimaryCardColor">#111827</SolidColorBrush>
+        <SolidColorBrush x:Key="PrimaryCardHoverColor">#1E293B</SolidColorBrush>
+        <SolidColorBrush x:Key="BorderBrushColor">#1E3A5F</SolidColorBrush>
 
         <SolidColorBrush x:Key="InactiveColor">#3B82F6</SolidColorBrush>
-        <SolidColorBrush x:Key="ActiveColor">#2563EB</SolidColorBrush>
-        <SolidColorBrush x:Key="PressedButtonBgColor">#1D4ED8</SolidColorBrush>
+        <SolidColorBrush x:Key="ActiveColor">#60A5FA</SolidColorBrush>
+        <SolidColorBrush x:Key="PressedButtonBgColor">#2563EB</SolidColorBrush>
 
-        <SolidColorBrush x:Key="PrimaryTextForeground">Black</SolidColorBrush>
-        <SolidColorBrush x:Key="SecondaryTextForeground">#4a5a72</SolidColorBrush>
-        <SolidColorBrush x:Key="MutedTextForeground">#8a9bb5</SolidColorBrush>
+        <SolidColorBrush x:Key="PrimaryTextForeground">#F8FAFC</SolidColorBrush>
+        <SolidColorBrush x:Key="SecondaryTextForeground">#CBD5E1</SolidColorBrush>
+        <SolidColorBrush x:Key="MutedTextForeground">#94A3B8</SolidColorBrush>
 
         <FontFamily x:Key="Fonts">Segoe UI, sans-serif</FontFamily>
     </Application.Resources>

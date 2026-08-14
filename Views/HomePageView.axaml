@@ -91,7 +91,6 @@
                     ColumnSpacing="10"
                     Margin="10,0,10,0">
                     <TextBox
-                        Background="#f8fafc"
                         BorderBrush="{DynamicResource BorderBrushColor}"
                         BorderThickness="2"
                         CornerRadius="9"
@@ -143,7 +142,6 @@
                     ColumnSpacing="10"
                     Margin="10,0,10,0">
                     <TextBox
-                        Background="#f8fafc"
                         BorderBrush="{DynamicResource BorderBrushColor}"
                         BorderThickness="2"
                         CornerRadius="9"
@@ -255,13 +253,12 @@
                     <TextBlock Text="Organize By" />
 
                     <ComboBox
-                        BorderBrush="LightGray"
-                        BorderThickness="2"
-                        ItemsSource="{Binding organizationMethods}"
+                        Background="#111127"
+                        ItemsSource="{Binding OrganizationMethods}"
                         SelectedItem="{Binding SeletectedMethod}">
                         <ComboBox.DataTemplates>
-                            <DataTemplate DataType="vm:FolderStruct">
-                                <TextBlock Text="{Binding DisplayedName}" />
+                            <DataTemplate DataType="vm:OrganizatoinTypes">
+                                <TextBlock Text="{Binding DisplayedNames}" />
                             </DataTemplate>
                         </ComboBox.DataTemplates>
                     </ComboBox>
@@ -269,10 +266,9 @@
                     <TextBlock Text="Folder Structure" />
 
                     <ComboBox
-                        BorderBrush="LightGray"
-                        BorderThickness="2"
-                        ItemsSource="{Binding Attributes_Of_FS}"
-                        SelectedItem="{Binding SelectedItem}">
+                        Background="#111127"
+                        ItemsSource="{Binding AttributesOfFs}"
+                        SelectedItem="{Binding Selectedattrs}">
                         <ComboBox.DataTemplates>
                             <DataTemplate DataType="vm:FolderStruct">
                                 <TextBlock Text="{Binding DisplayedName}" />

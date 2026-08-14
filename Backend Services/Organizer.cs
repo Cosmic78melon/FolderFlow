@@ -14,6 +14,7 @@ public class Organizer: IOrganizer
         { "msi", "bat", "dll", "exe", "sys", "dat","log", "temp","sav","cache","tmp", "so","com","cfg","drv","cmd","ini","lib" };
 
     private Dictionary<string, HashSet<string>> category = new ();
+    private static bool isAdded = false;
     private string[] ext_creator(string textFileName)
     {
         var uri = new Uri($"avares://FileOrganizer/Assets/Data/{textFileName}.txt");
@@ -36,63 +37,65 @@ public class Organizer: IOrganizer
             category[key].Add(exts[i]);
         }
     }
-    private bool CategoryInit()
+    private void CategoryInit()
     {
         try
         {
-            Load("3D images", "3D_Images_Extension");
-            Load("Audio", "AudioExtension");
+            Load("3D Images", "3D_Images_Extension");
+            Load("Audio files", "AudioExtension");
             Load("Cad Document", "CadExtension");
             Load("Codes", "CodesExtension");
-            Load("Compressed Files", "CompressedExtension");
+            Load("Zipped files", "CompressedExtension");
             Load("Ebooks", "EbooksExtension");
             Load("Fonts", "FontsExtension");
             Load("Images", "ImageExtensions");
             Load("Plugins", "PluginsFilesExtension");
-            Load("Raster Files", "Raster_ImagesExtension");
+            Load("Digital Photo", "Raster_ImagesExtension");
             Load("Raw Images", "RawImagesExtension");
-            Load("SpreadSheets", "SpreadsheetsExtension");
+            Load("Spreadsheets", "SpreadsheetsExtension");
             Load("Vector Images", "Vector_Images_Extension");
             Load("Videos", "VideoExtension");
-            Load("Web Files", "WebFilesExtension");
+            Load("Web Documents", "WebFilesExtension");
             Load("Documents", "Common_documentsExtension");
-            return true;
+            isAdded = true;
         }
         catch (Exception e)
         {
-            return false;
+            isAdded = false;
         }
     }
     
-    public (int, int, double) FolderInfos(List<string?>? folderPaths)
+    public (int, int, int) FolderInfos(List<string?>? folderPaths)
     {
         int totalNumberOfFiles = 0;        
         int totalNumberOfFolders = 0;
-        double totalSize = 0.0;
-        foreach(string folderPath in folderPaths)
-        {
-            if (!Directory.Exists(folderPath)) return (0,0,0.0);
-            DirectoryInfo dirs = new DirectoryInfo(folderPath);
-                
-            var options = new EnumerationOptions
+        int totalSize = 0;
+        
+        if (folderPaths != null)
+            foreach (string? folderPath in folderPaths)
             {
-                RecurseSubdirectories = true,
-                IgnoreInaccessible = true
-            };
-            long totalBytes = dirs.EnumerateFiles("*", options)
-                .Sum(file => file.Length);
-                
-            double totalMB = (double) totalBytes / (1024*1024);
-            totalSize += totalMB;
-            totalNumberOfFolders++;
-            totalNumberOfFiles += Directory.GetFiles(folderPath).Length;
-        }
+                if (!Directory.Exists(folderPath)) return (0, 0, 0);
+                DirectoryInfo dirs = new DirectoryInfo(folderPath);
+
+                var options = new EnumerationOptions
+                {
+                    RecurseSubdirectories = true,
+                    IgnoreInaccessible = true
+                };
+                long totalBytes = dirs.EnumerateFiles("*", options)
+                    .Sum(file => file.Length);
+
+                int totalMb = Convert.ToInt32(totalBytes / (1024 * 1024));
+                totalSize += totalMb;
+                totalNumberOfFolders++;
+                totalNumberOfFiles += Directory.GetFiles(folderPath).Length;
+            }
         return (totalNumberOfFiles, totalNumberOfFolders, totalSize);
     }
 
-    public (bool,int) OrganizeFiles(List<string?>? folderPaths, List<string?>? excludedFiles)
+    public (bool, int) OrganizeFiles(List<string> folderPaths, List<string> excludedFiles, string orgMethod, string structure)
     {
-        bool isAdded = CategoryInit();
+        if (isAdded) CategoryInit();
 
         if (!isAdded) return (false,0);
         

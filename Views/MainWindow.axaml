@@ -12,6 +12,7 @@
     xmlns:icons="using:FluentIcons.Avalonia"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:msg="https://github.com/xiyaowong/Message.Avalonia"
+    xmlns:views="using:FileOrganizer.Views"
     xmlns:vm="using:FileOrganizer.ViewModels"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
@@ -24,13 +25,24 @@
     </Design.DataContext>
 
     <Grid ColumnDefinitions="200, *">
-        <ContentControl Content="{Binding SelectedViewModel}" Grid.Column="1" />
-
-        <Border Grid.Column="0">
-            <StackPanel Orientation="Vertical" Spacing="10">
-                <icons:SymbolIcon FontSize="60" Symbol="VehicleTruckProfile" />
-                <Separator Margin="0,5,0,0" Width="200" />
-                <Button Classes.active="{Binding HomePageIsActive}" Command="{Binding GoToHomeCommand}">
+        <Border BorderBrush="DarkBlue" Grid.Column="0">
+            <StackPanel Orientation="Vertical" Spacing="30">
+                <icons:SymbolIcon
+                    FontSize="60"
+                    Foreground="AliceBlue"
+                    Margin="0,10,0,0"
+                    Symbol="Folder" />
+                <TextBlock
+                    FontSize="30"
+                    Foreground="AliceBlue"
+                    HorizontalAlignment="Center"
+                    Margin="0,-20,0,0"
+                    Text="FolderFlow" />
+                <Button
+                    Classes.active="{Binding HomePageIsActive}"
+                    Command="{Binding GoToHomeCommand}"
+                    Foreground="AliceBlue"
+                    Margin="0,30,0,0">
                     <StackPanel Orientation="Horizontal" Spacing="9">
                         <icons:SymbolIcon />
                         <Label Content="Home" />
@@ -44,6 +56,9 @@
                 </Button>
             </StackPanel>
         </Border>
+
+
+        <ContentControl Content="{Binding SelectedViewModel}" Grid.Column="1" />
     </Grid>
 
 </Window>

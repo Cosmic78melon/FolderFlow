@@ -18,8 +18,8 @@ public class FolderStruct
 
 public class OrganizatoinTypes
 {
-    public required string? type {get; set;} 
-    public required string? DisplayedName {get; set;}
+    public required string? types {get; set;} 
+    public required string? DisplayedNames {get; set;}
 }
 public partial class HomePageViewModel : ViewModelBase
 {
@@ -28,7 +28,7 @@ public partial class HomePageViewModel : ViewModelBase
     private IToastService _toastService;
     [ObservableProperty] private string? _folderPath;
     [ObservableProperty] private string? _excludeFilesPath;
-    [ObservableProperty] private FolderStruct _selectedItem;
+    [ObservableProperty] private FolderStruct _selectedattrs;
     [ObservableProperty] private OrganizatoinTypes _seletectedMethod;
     private IOrganizer _organizer;
     private List<string> ListOfFolders;
@@ -42,26 +42,21 @@ public partial class HomePageViewModel : ViewModelBase
     [ObservableProperty] private double? _totalStorage = 0.0;
     [ObservableProperty] private int? _totalNumberOfFileOrg = 0;
 
-    public ObservableCollection<OrganizatoinTypes> organizationMethods { get; } =
+    public ObservableCollection<OrganizatoinTypes> OrganizationMethods { get; } =
     [
         new OrganizatoinTypes
         {
-            DisplayedName = "File Type",
-            type = "typeWise"
+            DisplayedNames = "File Type",
+            types = "typeWise"
         },
         new OrganizatoinTypes
         {
-            DisplayedName = "Date Created",
-            type = "datewise"
-        },
-        new OrganizatoinTypes
-        {
-            DisplayedName = "Extension",
-            type = "extensionwise"
+            DisplayedNames = "Date Created",
+            types = "dateWise"
         }
     ];
     
-    public ObservableCollection<FolderStruct> Attributes_Of_FS { get; } =
+    public ObservableCollection<FolderStruct> AttributesOfFs { get; } =
     [
         new FolderStruct
         {
@@ -76,7 +71,7 @@ public partial class HomePageViewModel : ViewModelBase
         new FolderStruct
         {
             DisplayedName = "Subfolders → Year → Month",
-            type = "yearTomonBasedFold"
+            type = "yearToMonBasedFold"
         },
         new FolderStruct
         {
@@ -91,8 +86,8 @@ public partial class HomePageViewModel : ViewModelBase
         _filePickerDialouge = filePickerDialouge;
         _organizer = organizer;
         _toastService = toastService;
-        SelectedItem = Attributes_Of_FS.FirstOrDefault();
-        SeletectedMethod = organizationMethods.FirstOrDefault();
+        SeletectedMethod = OrganizationMethods.FirstOrDefault();
+        Selectedattrs = AttributesOfFs.FirstOrDefault();
     }
     
     enum SymbolTypes
@@ -162,17 +157,29 @@ public partial class HomePageViewModel : ViewModelBase
     public async Task Organize()
     {
         bool isOrganized;
-        (isOrganized, TotalNumberOfFileOrg) = _organizer.OrganizeFiles(ListOfFolders, ListOfExcludedFiles);
+
+        if (ListOfFolders.Count == 0)
+        {
+            SymbolTypes failed = (SymbolTypes)404;
+            await _toastService.ShowMessageAsync("Folder is Not Organized", "Select a Folder", true, failed.ToString(), "Red", "#D10000", 2500);
+            return;
+        }
+        if (SeletectedMethod.types == null) return;
+        if (Selectedattrs.type == null) return;
+        
+        (isOrganized, TotalNumberOfFileOrg) = _organizer.OrganizeFiles(ListOfFolders, ListOfExcludedFiles, SeletectedMethod.types, Selectedattrs.type);
         if (isOrganized)
         {
             FolderPath = string.Empty;
             ExcludeFilesPath = string.Empty;
-            SymbolTypes Success = (SymbolTypes)100;
-            await _toastService.ShowMessageAsync("Organized", "Folder is Successfully Organized", true, Success.ToString(), "#008000", "#50C878");
+            SymbolTypes success = (SymbolTypes)100;
+            await _toastService.ShowMessageAsync("Organized", "Folder is Successfully Organized", true, success.ToString(), "#008000", "#50C878", 1700);
         }
-
-        SymbolTypes failed = (SymbolTypes)404;
-        await _toastService.ShowMessageAsync("Folder is Not Organized", "Something Went Wrong", true, failed.ToString(), "Red", "#D10000");
+        else
+        {
+            SymbolTypes failed = (SymbolTypes)404;
+            await _toastService.ShowMessageAsync("Folder is Not Organized", "Something Went Wrong", true, failed.ToString(), "Red", "#D10000", 2500);
+        }
     }
     
 }

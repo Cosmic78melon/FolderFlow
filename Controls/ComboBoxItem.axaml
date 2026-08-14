@@ -5,10 +5,10 @@
     <Design.PreviewWith>
         <Border Padding="20">
             <Border
-                Background="{DynamicResource ComboBoxDropDownBackground}"
+                Background="{DynamicResource PrimaryBackgroundColor}"
                 BorderBrush="{DynamicResource ComboBoxDropDownBorderBrush}"
                 BorderThickness="{DynamicResource ComboBoxDropdownBorderThickness}"
-                CornerRadius="{DynamicResource OverlayCornerRadius}"
+                CornerRadius="8"
                 Margin="0,-1,0,-1"
                 Padding="{DynamicResource ComboBoxDropdownBorderPadding}">
                 <StackPanel HorizontalAlignment="Stretch">
@@ -23,14 +23,14 @@
     </Design.PreviewWith>
 
     <ControlTheme TargetType="ComboBoxItem" x:Key="{x:Type ComboBoxItem}">
-        <Setter Property="Foreground" Value="{DynamicResource ComboBoxItemForeground}" />
-        <Setter Property="Background" Value="{DynamicResource ComboBoxItemBackground}" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Background" Value="{DynamicResource PrimaryBackgroundColor}" />
         <Setter Property="Padding" Value="{DynamicResource ComboBoxItemThemePadding}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="Template">
             <ControlTemplate>
                 <ContentPresenter
-                    Background="{TemplateBinding Background}"
+                    Background="{DynamicResource PrimaryBackgroundColor}"
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
                     Content="{TemplateBinding Content}"
@@ -46,7 +46,7 @@
 
         <!--  PointerOver state  -->
         <Style Selector="^:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource ComboBoxItemBackgroundPointerOver}" />
+            <Setter Property="Background" Value="{DynamicResource PrimarySideMenuBackgroundColor}" />
             <Setter Property="BorderBrush" Value="{DynamicResource ComboBoxItemBorderBrushPointerOver}" />
             <Setter Property="Foreground" Value="{DynamicResource ComboBoxItemForegroundPointerOver}" />
         </Style>
@@ -68,7 +68,7 @@
         <!--  Selected state  -->
         <Style Selector="^:selected">
             <Style Selector="^ /template/ ContentPresenter">
-                <Setter Property="Background" Value="#b9d2fa" />
+                <Setter Property="Background" Value="DarkSlateBlue" />
                 <Setter Property="BorderBrush" Value="{DynamicResource ComboBoxItemBorderBrushSelected}" />
                 <Setter Property="Foreground" Value="{DynamicResource ComboBoxItemForegroundSelected}" />
             </Style>
@@ -80,7 +80,7 @@
             </Style>
             <!--  Selected PointerOver state  -->
             <Style Selector="^:pointerover /template/ ContentPresenter">
-                <Setter Property="Background" Value="#b9d2fa" />
+                <Setter Property="Background" Value="DarkSlateBlue" />
                 <Setter Property="BorderBrush" Value="{DynamicResource ComboBoxItemBorderBrushSelectedPointerOver}" />
                 <Setter Property="Foreground" Value="{DynamicResource ComboBoxItemForegroundSelectedPointerOver}" />
             </Style>

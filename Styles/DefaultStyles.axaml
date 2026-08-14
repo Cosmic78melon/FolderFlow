@@ -1,15 +1,27 @@
-﻿<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<Styles
+    xmlns="https://github.com/avaloniaui"
+    xmlns:icons="using:FluentIcons.Avalonia"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
         <Border Padding="20" />
     </Design.PreviewWith>
+
+    <Style Selector="TextBlock">
+        <Setter Property="Foreground" Value="AliceBlue" />
+    </Style>
+
+    <Style Selector="icons|SymbolIcon">
+        <Setter Property="Foreground" Value="AliceBlue" />
+    </Style>
 
     <Style Selector="Button">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="FontFamily" Value="{DynamicResource Fonts}" />
-        <Setter Property="FontSize" Value="30" />
+        <Setter Property="FontSize" Value="24" />
         <Setter Property="Foreground" Value="{DynamicResource SecondaryTextForeground}" />
+        <Setter Property="CornerRadius" Value="8" />
         <Setter Property="RenderTransform" Value="scale(1)" />
         <Setter Property="Transitions">
             <Transitions>
@@ -20,29 +32,81 @@
             </Transitions>
         </Setter>
     </Style>
-    <Style Selector="Button.active:pointerover /template/ContentPresenter">
+
+    <!--  Active button  -->
+    <!--  Base Active Button Style  -->
+    <Style Selector="Button.active">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource SecondaryTextForeground}" />
+        <Setter Property="FontFamily" Value="{DynamicResource Fonts}" />
+        <Setter Property="FontSize" Value="24" />
+        <!--  Standardized size for modern UI  -->
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Padding" Value="16, 12" />
+        <Setter Property="Margin" Value="8, 4" />
+        <Setter Property="CornerRadius" Value="8" />
+        <!--  Stylish rounded corners  -->
+
+        <!--  This makes the button react to the width of its parent container (the side menu)  -->
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <!--  Left alignment is usually best for side menus  -->
+
+        <Setter Property="RenderTransform" Value="scale(1)" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <TransformOperationsTransition
+                    Duration="0:0:0.15"
+                    Easing="CubicEaseOut"
+                    Property="RenderTransform" />
+            </Transitions>
+        </Setter>
+    </Style>
+
+    <!--  Smooth Background Fade for the ContentPresenter  -->
+    <Style Selector="Button.active /template/ ContentPresenter">
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Duration="0:0:0.2" Property="Background" />
+            </Transitions>
+        </Setter>
+    </Style>
+
+    <!--  Hover State  -->
+    <Style Selector="Button.active:pointerover /template/ ContentPresenter">
         <Setter Property="Background">
-            <LinearGradientBrush EndPoint="0%, 100%" StartPoint="0%, 0%">
-                <GradientStop Color="#3B82F6" Offset="0.0" />
+            <!--  Adjusted the angle slightly to make the gradient look more dynamic  -->
+            <LinearGradientBrush EndPoint="100%, 100%" StartPoint="0%, 0%">
+                <GradientStop Color="DodgerBlue" Offset="0.0" />
                 <GradientStop Color="#1D4ED8" Offset="1.0" />
             </LinearGradientBrush>
         </Setter>
-        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextForeground}" />
-        <Setter Property="RenderTransform" Value="scale(1.05)" />
+        <Setter Property="RenderTransform" Value="scale(1.02)" />
+        <!--  Subtle, premium hover scale  -->
     </Style>
 
-    <Style Selector="Button.active:pressed /template/ContentPresenter">
-        <Setter Property="Background" Value="{DynamicResource PressedButtonBgColor}" />
+    <Style Selector="Button.active:pointerover">
         <Setter Property="Foreground" Value="{DynamicResource PrimaryTextForeground}" />
-        <Setter Property="RenderTransform" Value="scale(0.98)" />
+    </Style>
+
+    <!--  Pressed State  -->
+    <Style Selector="Button.active:pressed /template/ ContentPresenter">
+        <Setter Property="Background" Value="DeepSkyBlue" />
+        <Setter Property="RenderTransform" Value="scale(0.96)" />
+        <!--  Natural push-down effect  -->
+    </Style>
+
+    <Style Selector="Button.active:pressed">
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextForeground}" />
     </Style>
 
 
     <Style Selector="Button.active /template/ ContentPresenter">
         <Setter Property="Background">
-            <LinearGradientBrush EndPoint="0%, 100%" StartPoint="0%, 0%">
-                <GradientStop Color="#3B82F6" Offset="0.0" />
-                <GradientStop Color="#1D4ED8" Offset="1.0" />
+            <LinearGradientBrush EndPoint="100%,100%" StartPoint="0%,0%">
+                <GradientStop Color="#4A7CFF" Offset="0.0" />
+                <GradientStop Color="#3563E9" Offset="0.6" />
+                <GradientStop Color="#2748C7" Offset="1.0" />
             </LinearGradientBrush>
         </Setter>
         <Setter Property="Foreground" Value="{DynamicResource PrimaryTextForeground}" />
